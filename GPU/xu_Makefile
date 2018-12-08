@@ -1,0 +1,8 @@
+NVCC = /usr/local/cuda/bin/nvcc
+NVCC_FLAGS = -g -G -Xcompiler -Wall
+LIBS += -lcublas -lcusolver -lculibos -lcufft -std=c++11
+
+all: nbasvd
+
+nbasvd: nbasvd.cpp Msvd.cpp fft.cu norm.cpp one_step.cu tprod.cu
+	$(NVCC) $(NVCC_FLAGS) $^ -o $@ $(LIBS)

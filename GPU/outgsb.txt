@@ -1,0 +1,42 @@
+result is : 18.255625
+time is : 0.290000
+0 turn
+time is : 0.010000
+1 turn
+time is : 0.010000
+2 turn
+time is : 0.030000
+3 turn
+time is : 0.070000
+4 turn
+time is : 0.120000
+5 turn
+time is : 0.230000
+6 turn
+time is : 0.400000
+7 turn
+time is : 0.660000
+8 turn
+time is : 0.990000
+9 turn
+time is : 1.200000
+10 turn
+time is : 1.950000
+11 turn
+time is : 2.490000
+12 turn
+time is : 3.390000
+13 turn
+time is : 4.040000
+14 turn
+time is : 5.290000
+15 turn
+time is : 6.810000
+16 turn
+time is : 8.720000
+17 turn
+time is : 10.930000
+18 turn
+time is : 12.370000
+19 turn
+time is : 1.970000
