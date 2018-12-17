@@ -39,7 +39,7 @@ int  main(int argc,char* argv[]){
             streamedtsvd(t,m,n,tupe,u,s,v);
             end = clock();
             basedtsvd(t,m,n,tupe,test_u,test_s,test_v);
-#if 0
+#if 1
 printf("\n++++++++++++++++++++\n");
          for(int i=0;i<u_len;i++){
                printf("%f\n",u[i]-test_u[i]);

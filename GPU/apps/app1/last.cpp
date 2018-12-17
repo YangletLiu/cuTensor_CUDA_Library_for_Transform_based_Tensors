@@ -12,7 +12,7 @@ int main(int argc, char **argv){
         int b = atoi(argv[2]);
         int c = atoi(argv[3]);
         int rank = 5;
-#if 1
+#if 0
         float *t1 = new float[a*rank*c];
         for(int i=0; i<a*rank*c; i++)
         	t1[i] = random(1000);
@@ -26,14 +26,19 @@ int main(int argc, char **argv){
         delete[] t2;
         t2 = nullptr;
 #endif
-#if 0
+#if 1
         float *T = new float[a*b*c];
         float *T_w = new float[a*b*c];
-        ifstream read("../data/nba.txt");
+        ifstream read(argv[4]);
         for (int i =0; i < a*b*c; i++)
         {
             read >> T_w[i];
         }
+/*        for (int i =0; i < a*b*c; i++)
+        {
+            cout << T_w[i];
+        }
+*/
         for (int i=0; i< c;i++)
         {
             for (int j=0; j< a; j++)

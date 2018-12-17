@@ -1,5 +1,5 @@
 #!/bin/bash
-#set -x
+set -x
 nvidia-smi
 touch result.txt
 m=100
@@ -56,8 +56,8 @@ echo "batched++++++++++++++++++++"  >> result.txt
 while [ $p -lt 1 ]; do
 while [ $j -lt 2 ]; do
 while [ $i -lt 20 ]; do
-   echo "$m $n $k"  >> result.txt
-#   ./test $m $n $k batched  >> result.txt
+#   echo "$m $n $k"  >> result.txt
+   ./test $m $n $k batched  >> result.txt
    m=`expr $m + 100`
    n=`expr $n + 100`
    i=`expr $i + 1`

@@ -9,26 +9,28 @@ int main(int argc,char* argv[]){
 		n=atoi(argv[2]);
 		tupe=atoi(argv[3]);
 		cuComplex* tau=(cuComplex*)malloc(sizeof(cuComplex)*m*n*tupe);
+		memset(tau,0,sizeof(cuComplex));
 		cuComplex* test_tau=(cuComplex*)malloc(sizeof(cuComplex)*m*n*tupe);
 		float* a = (float*)malloc(sizeof(float)*m*n*tupe);
 		float* test_a = (float*)malloc(sizeof(float)*m*n*tupe);
 		for(int i=0;i<m*n*tupe;i++){
-			a[i]=(float)rand()/(RAND_MAX/100);
+		//	a[i]=(float)rand()/(RAND_MAX/100);
+			a[i]=i+1;
 		}
 		for(int i=0;i<m*n*tupe;i++){
-		 test_a[i]=a[i];
+		 	test_a[i]=a[i];
 		}
 		clock_t start,end;
 		if(strcmp("batched",argv[4]) == 0){
 			start=clock();
 			batchedtqr(a,m,n,tupe,tau);
 			end=clock();
-#if 0		
+#if 1		
         for(int i=0;i<m*n*tupe;i++){
 				printf("%f 	",a[i]);
 			}
 		printf("\n+++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-			for(int i=0;i<min(m,n)*tupe;i++){
+			for(int i=0;i<min(m,n)*(tupe/2+1);i++){
 				printf("%f %f  ",tau[i].x,tau[i].y);
 	    }
 #endif
@@ -37,7 +39,7 @@ int main(int argc,char* argv[]){
 			start=clock();
 		 	basedtqr(a,m,n,tupe,tau);
 			end=clock();
-#if 0
+#if 1
         for(int i=0;i<m*n*tupe;i++){
 				printf("%f 	",a[i]);
 			}
@@ -52,15 +54,22 @@ int main(int argc,char* argv[]){
 			start=clock();
 		 	streamedtqr(a,m,n,tupe,tau);
 			end=clock();
-#if 0
-		 	basedtqr(test_a,m,n,tupe,test_tau);
+#if 1
+		 	batchedtqr(test_a,m,n,tupe,test_tau);
+        for(int i=0;i<m*n*tupe;i++){
+				printf("%f 	",a[i]);
+			}
+		printf("\n+++++++++++++++++++++++++++++++++++++++++++++++++++\n");
         for(int i=0;i<m*n*tupe;i++){
 				printf("%f 	",a[i]-test_a[i]);
 			}
 		printf("\n+++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-			for(int i=0;i<min(m,n)*tupe;i++){
+			for(int i=0;i<min(m,n)*(tupe/2+1);i++){
 				printf("[%f  %f]",tau[i].x-test_tau[i].x,tau[i].y-test_tau[i].y);
-
+			}
+		printf("\n+++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+			for(int i=0;i<min(m,n)*(tupe/2+1);i++){
+				printf("[%f  %f]",tau[i].x,tau[i].y);
 			}
 #endif			
             }else{

@@ -48,7 +48,6 @@ void batchedtqr(float* t,const int m,const int n,const int tupe,cuComplex* tau)
 		return;
 	}
 
-
     if(magma_init() != MAGMA_SUCCESS){
 		fprintf(stdout,"[%s]:[%d]magma_init error!",__FUNCTION__,__LINE__);
 		return;
@@ -74,7 +73,8 @@ void batchedtqr(float* t,const int m,const int n,const int tupe,cuComplex* tau)
     min_mn = min(M, N);
     lda    = M;
 //            n2     = lda * N * batchCount;
-    ldda = ((M+31)/32)*32;
+//    ldda = ((M+31)/32)*32;
+    ldda = magma_roundup( M, 32 );
 //            magma_cmalloc_cpu( &h_Amagma,   n2     );
 //            magma_cmalloc_cpu( &htau_magma, min_mn * batchCount );
      if(magma_cmalloc( &d_A,   ldda*N * batchCount ) != MAGMA_SUCCESS){
@@ -127,6 +127,7 @@ void batchedtqr(float* t,const int m,const int n,const int tupe,cuComplex* tau)
 //   magma_cprint(min_mn, batchCount, htau_magma, min_mn);
 
      magma_ccopymatrix(M, column, d_A, ldda, d_fftData, lda, queue );
+     magma_queue_destroy( queue );
      if( d_A != NULL ){ 
      magma_free( d_A   );
      d_A = NULL;
@@ -147,7 +148,6 @@ void batchedtqr(float* t,const int m,const int n,const int tupe,cuComplex* tau)
      magma_free( dtau_array  );
      dtau_array = NULL;
      }
-     magma_queue_destroy(queue);
      if( magma_finalize() != MAGMA_SUCCESS){
 		fprintf(stdout,"[%s]:[%d]magma_finalize error!",__FUNCTION__,__LINE__);
 		return;

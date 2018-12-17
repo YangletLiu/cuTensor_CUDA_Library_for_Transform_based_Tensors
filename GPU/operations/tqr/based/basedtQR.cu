@@ -97,7 +97,7 @@ void  basedtqr(float *A,const int m,const int n,const int tupe, cuComplex* Tau)
 	cudaMemcpy(Tau,d_tau,sizeof(cuComplex)* tupe * tau,cudaMemcpyDeviceToHost);
 	
         cudaMemcpy (&info_gpu , devInfo , sizeof ( int ) , cudaMemcpyDeviceToHost);
-//        printf("after geqrf:info_gpu = %d\n", info_gpu);
+        printf("after geqrf:info_gpu = %d\n", info_gpu);
 	}
 	//Tifft
 

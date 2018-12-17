@@ -55,8 +55,8 @@ int main(int argc, char** argv)
     start = clock();
     streamedtprod(A, B, C, Am, Bn, An, Ak);
     finish = clock();	
- //   basedtprod(A, B, C1, Am, Bn, An, Ak);
-#if 0
+    basedtprod(A, B, C1, Am, Bn, An, Ak);
+#if 1
     for(int i=0;i<Am*An*Ak;i++)
 	{
 		printf("%f  ",C[i]-C1[i]);
@@ -64,7 +64,7 @@ int main(int argc, char** argv)
     printf("\n================================\n");
 	for(int i=0;i<Am*An*Ak;i++)
 	{
-		printf("%f  ",C[i]);
+//		printf("%f  ",C[i]);
 	}
 #endif
     }

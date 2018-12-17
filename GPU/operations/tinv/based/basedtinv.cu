@@ -1,5 +1,6 @@
 #include "inv.h"
 void basedtinv(float* t,const int m,const int n,const int tupe,float* invA){
+#if 1
 	int bat = m*n;
 	cufftComplex* t_f = (cufftComplex*)malloc(bat*tupe*sizeof(cufftComplex));
 	//transform
@@ -204,5 +205,5 @@ printf("\n============================\n");
         free(h_A);
         h_A=NULL;
     }
-	
+#endif	
 }
