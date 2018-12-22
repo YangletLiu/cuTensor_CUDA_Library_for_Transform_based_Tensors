@@ -49,12 +49,12 @@ void batchedtsvd(float* t,const int m,const int n, const int tupe, float* host_u
 	}
 	//construct matrix K
 
-/*	cuComplex* h_fft=(cuComplex*)malloc(sizeof(cuComplex)*m*n*ht);
+	cuComplex* h_fft=(cuComplex*)malloc(sizeof(cuComplex)*m*n*ht);
 	cudaMemcpy(h_fft, d_fftData, sizeof(cuComplex)*m*n*ht,cudaMemcpyDeviceToHost);
 	for(int i=0;i<m*n*ht;i++){
 	printf("h_fft %f	%f \n",h_fft[i].x,h_fft[i].y);
 	}
-*/
+
 	float* d_k;
 	cudaMalloc((void**)&d_k,sizeof(float)*m*n*ht*4);
 	
@@ -78,12 +78,12 @@ void batchedtsvd(float* t,const int m,const int n, const int tupe, float* host_u
 	
 	cudaFree(d_fftData);	
 
-/*	float* h_k=(float*)malloc(sizeof(float)*4*m*n*ht);
+	float* h_k=(float*)malloc(sizeof(float)*4*m*n*ht);
 	cudaMemcpy(h_k, d_k, sizeof(float)*4*m*n*ht,cudaMemcpyDeviceToHost);
 	for(int i=0;i<4*m*n*ht;i++){
 	printf("h_k %f \n",h_k[i]);
 	}
-*/			
+			
 	//tsvd
 	int M=2*m;
 	int N=2*n; 
@@ -108,11 +108,11 @@ void batchedtsvd(float* t,const int m,const int n, const int tupe, float* host_u
 	
 	kblasFreeWorkspace(handle);
 	
-/*	cudaMemcpy(h_k, d_k, sizeof(float)*4*m*n*ht,cudaMemcpyDeviceToHost);
+	cudaMemcpy(h_k, d_k, sizeof(float)*4*m*n*ht,cudaMemcpyDeviceToHost);
 	for(int i=0;i<4*m*n*ht;i++){
 	printf("take_h_k %f \n",h_k[i]);
 	}
-*/	
+	
 	//extract elements 
 
 	cuComplex* d_u;
@@ -128,12 +128,12 @@ void batchedtsvd(float* t,const int m,const int n, const int tupe, float* host_u
 	}
 	extractEvenNumU<<<blocks,threads>>>(d_k,d_u,m,n,ht);	
 	
-/*	cuComplex* h_u = (cuComplex*)malloc(sizeof(cuComplex)*m*n*ht);
+	cuComplex* h_u = (cuComplex*)malloc(sizeof(cuComplex)*m*n*ht);
 	cudaMemcpy(h_u, d_u, sizeof(cuComplex)*m*n*ht,cudaMemcpyDeviceToHost);
 	for(int i=0;i<m*n*ht;i++){
 	printf("take_h_u %f	%f \n",h_u[i].x,h_u[i].y);
 	}
-*/
+
 
 	float* ds_extract;
 	cudaMalloc((void**)&ds_extract,sizeof(float)*ht*((m<n)?m:n));	
@@ -148,12 +148,12 @@ void batchedtsvd(float* t,const int m,const int n, const int tupe, float* host_u
 	}
 	extractEvenNumS<<<blocks,threads>>>(d_s,ds_extract,m,n,ht);
 	
-/*	float* h_s2=(float*)malloc(sizeof(float)*num);
+	float* h_s2=(float*)malloc(sizeof(float)*num);
 	cudaMemcpy(h_s2, ds_extract, sizeof(float)*num,cudaMemcpyDeviceToHost);
 	for(int i=0;i<num;i++){
 	printf("take_h_s2 %f \n",h_s2[i]);
 	}
-*/
+
 	cudaFree(d_s);	
 	//itfft_u
 
@@ -209,10 +209,10 @@ void batchedtsvd(float* t,const int m,const int n, const int tupe, float* host_u
 	}
          fftResultProcess<<<blocks,threads,0,stream[0]>>>(du,num,tupe);
 
-//	if(cudaDeviceSynchronize() != cudaSuccess){
-//		fprintf(stdout,"[%s]:[%d] cuda synchronize err!",__FUNCTION__,__LINE__);
-//		return;
-//	}
+	if(cudaDeviceSynchronize() != cudaSuccess){
+		fprintf(stdout,"[%s]:[%d] cuda synchronize err!",__FUNCTION__,__LINE__);
+		return;
+	}
 	cudaMemcpyAsync(host_u,du,sizeof(float)*m*n*tupe,cudaMemcpyDeviceToHost,stream[0]);	
 //	cudaMemcpy(t,du,sizeof(float)*m*n*tupe,cudaMemcpyDeviceToHost);
 
@@ -303,4 +303,6 @@ void batchedtsvd(float* t,const int m,const int n, const int tupe, float* host_u
 	
 	cudaStreamDestroy(stream[0]);
 	cudaStreamDestroy(stream[1]);
+	
+	cudaDeviceSynchronize();
 }

@@ -4,8 +4,17 @@
 #include <cufft.h>
 #include "cublas_v2.h"
 #include <cuda_runtime.h>
+#include"cusolverDn.h"
 #include <stdio.h>
-#define PLAN1D_SIZE 16
+#define Min(a,b) ((a)<(b))?(a):(b)
+#define PLAN1D_SIZE 500
+/**
+*qrsolve is using to solve AX=B systems.
+* A is a matrix,the size is m*n
+* B is a matrix,the size is m*k
+* X is a matrix,the size is min(m,n)*k
+*/
+void qrsolve(cuComplex* d_A,cuComplex* d_B,const int m,const int n,const int k,cuComplex* d_X);
 void batcheddiagmat(float *t,const int m,const int batch,float* result);
 void batchedctranspose(cuComplex* A,const int m,const int n,const int batch,cuComplex* T);
 void batchedftranspose(float* A,const int m,const int n,const int batch,float* T);

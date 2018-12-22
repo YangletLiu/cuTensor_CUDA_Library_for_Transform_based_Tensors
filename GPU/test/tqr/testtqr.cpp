@@ -14,8 +14,8 @@ int main(int argc,char* argv[]){
 		float* a = (float*)malloc(sizeof(float)*m*n*tupe);
 		float* test_a = (float*)malloc(sizeof(float)*m*n*tupe);
 		for(int i=0;i<m*n*tupe;i++){
-		//	a[i]=(float)rand()/(RAND_MAX/100);
-			a[i]=i+1;
+			a[i]=(float)rand()/(RAND_MAX/100);
+		//	a[i]=i+1;
 		}
 		for(int i=0;i<m*n*tupe;i++){
 		 	test_a[i]=a[i];
@@ -25,7 +25,7 @@ int main(int argc,char* argv[]){
 			start=clock();
 			batchedtqr(a,m,n,tupe,tau);
 			end=clock();
-#if 1		
+#if 0		
         for(int i=0;i<m*n*tupe;i++){
 				printf("%f 	",a[i]);
 			}
@@ -39,7 +39,7 @@ int main(int argc,char* argv[]){
 			start=clock();
 		 	basedtqr(a,m,n,tupe,tau);
 			end=clock();
-#if 1
+#if 0
         for(int i=0;i<m*n*tupe;i++){
 				printf("%f 	",a[i]);
 			}
@@ -54,7 +54,7 @@ int main(int argc,char* argv[]){
 			start=clock();
 		 	streamedtqr(a,m,n,tupe,tau);
 			end=clock();
-#if 1
+#if 0
 		 	batchedtqr(test_a,m,n,tupe,test_tau);
         for(int i=0;i<m*n*tupe;i++){
 				printf("%f 	",a[i]);

@@ -19,18 +19,22 @@ int main(int argc,char* argv[]){
 			start=clock();
 			batchedtinv(a,m,n,tupe,invA);
 			end=clock();
+#if 0
 			for(int i=0;i<m*n*tupe;i++){
 				printf("%f 	",invA[i]);
 			}
-			
+#endif			
+
 		}else{
             if(strcmp("based",argv[4]) == 0){
                 start=clock();
                 basedtinv(a,m,n,tupe,invA);
                 end=clock();
+#if 0
 			for(int i=0;i<m*n*tupe;i++){
 				printf("%f 	",invA[i]);
 			}
+#endif
 			
             }else
             {
@@ -38,9 +42,11 @@ int main(int argc,char* argv[]){
                     start=clock();
                     streamedtinv(a,m,n,tupe,invA);
                     end=clock();
+#if 0
 			for(int i=0;i<m*n*tupe;i++){
 				printf("%f 	",invA[i]);
 			}
+#endif
 			
                 }else{
                     printf("input error!\n");

@@ -12,8 +12,8 @@ int  main(int argc,char* argv[]){
         int tupe = atoi(argv[3]);
         float* t = new float[m*n*tupe];
         for(int i=0;i<m*n*tupe;i++){
-           t[i]=rand()/(RAND_MAX/10);
-//            t[i]=i;
+//           t[i]=rand()/(RAND_MAX/10);
+           t[i]=i;
         }
 
        // cufftComplex* fftout=(cufftComplex*)malloc(sizeof(cufftComplex)*m*n*(tupe/2+1));
@@ -62,16 +62,16 @@ printf("\n++++++++++++++++++++\n");
             start = clock();    
                 batchedtsvd(t,m,n,tupe,host_u,host_s);
             end = clock();
-//            printf("\n++++++++++++++++++++\n");
-//	printf("***************U\n");
-//        for(int i=0;i<m*n*tupe;i++){
-//            printf(" %f 	",host_u[i]);
-//        }
-//            printf("\n++++++++++++++++++++\n");
-//	printf("***************S\n");
-//            for(int i=0;i<s_len;i++){
-//                printf("%f\n",host_s[i]);
-//                    }
+            printf("\n++++++++++++++++++++\n");
+	printf("***************U\n");
+        for(int i=0;i<m*n*tupe;i++){
+            printf(" %f 	",host_u[i]);
+        }
+            printf("\n++++++++++++++++++++\n");
+	printf("***************S\n");
+            for(int i=0;i<s_len;i++){
+                printf("%f	",host_s[i]);
+                    }
 	cudaFreeHost(host_u);
 	cudaFreeHost(host_s);
     
@@ -84,16 +84,16 @@ printf("\n++++++++++++++++++++\n");
 #if 0      
          printf("\n++++++++++++++++++++\n");
           for(int i=0;i<u_len;i++){
-                printf("%f\n",u[i]);
+                printf("%f	",u[i]);
                 }
             printf("\n++++++++++++++++++++\n");
             for(int i=0;i<v_len;i++){
-                printf("%f\n",v[i]);
+                printf("%f	",v[i]);
                 }
-/*           printf("\n++++++++++++++++++++\n");
+           printf("\n++++++++++++++++++++\n");
             for(int i=0;i<s_len;i++){
-                printf("%f\n",s[i]);
-                    }*/
+                printf("%f	",s[i]);
+                    }
 #endif          
           }else{
                     printf("argv[4] should be based or batched or stramed\n");

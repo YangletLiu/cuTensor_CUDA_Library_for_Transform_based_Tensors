@@ -112,7 +112,7 @@ void streamedtinv(float* t,const int m,const int n,const int tupe,float* invA){
         }
 
         cudaMemcpy(info_h,info,sizeof(int),cudaMemcpyDeviceToHost);
-        printf("[ %d ] ",info_h[0]);
+//        printf("[ %d ] ",info_h[0]);
         cudaDeviceSynchronize();
         if(cublasCgetriBatched(handle[i],n,Aarray_d,n,Pivot+i*n+j*n*PLAN1D_SIZE,Ainv_d,n,info+i+j*PLAN1D_SIZE,1) !=CUBLAS_STATUS_SUCCESS){
 		fprintf(stdout,"[%s]:[%d] cublasCgetri error!",__FUNCTION__,__LINE__);
@@ -136,7 +136,7 @@ void streamedtinv(float* t,const int m,const int n,const int tupe,float* invA){
         }
 
         cudaMemcpy(info_h,info,sizeof(int),cudaMemcpyDeviceToHost);
-        printf("[ %d ] ",info_h[0]);
+//        printf("[ %d ] ",info_h[0]);
         cudaDeviceSynchronize();
         if(cublasCgetriBatched(handle[i],n,Aarray_d,n,Pivot+i*n+tupe_num*n*PLAN1D_SIZE,Ainv_d,n,info+i+tupe_num*PLAN1D_SIZE,1) !=CUBLAS_STATUS_SUCCESS){
 		fprintf(stdout,"[%s]:[%d] cublasCgetri error!",__FUNCTION__,__LINE__);
@@ -161,7 +161,7 @@ void streamedtinv(float* t,const int m,const int n,const int tupe,float* invA){
         }
 
         cudaMemcpy(info_h,info,sizeof(int),cudaMemcpyDeviceToHost);
-        printf("[ %d ] ",info_h[0]);
+//        printf("[ %d ] ",info_h[0]);
         cudaDeviceSynchronize();
         if(cublasCgetriBatched(handle[i],n,Aarray_d,n,Pivot+i*n,Ainv_d,n,info+i,1) !=CUBLAS_STATUS_SUCCESS){
 		fprintf(stdout,"[%s]:[%d] cublasCgetri error!",__FUNCTION__,__LINE__);
@@ -252,12 +252,29 @@ void streamedtinv(float* t,const int m,const int n,const int tupe,float* invA){
 		return;
 	}
        	int num=bat*tupe;
-	float* invA_temp = (float*)malloc(sizeof(float)*tupe*bat);
-
-	cudaMemcpy(invA_temp,d_inv,sizeof(float)*bat*tupe,cudaMemcpyDeviceToHost);
-	for(int i=0;i<num;i++){
-		invA[i]=invA_temp[i]/tupe;
+	int threads,blocks;
+        if(num<512){
+          threads=num;
+          blocks=1;
+        }else{
+	  threads=512;
+	  blocks=((num%512 ==0)?num/512:num/512+1);
 	}
+         fftResultProcess<<<blocks,threads>>>(d_inv,num,tupe);
+
+	if(cudaDeviceSynchronize() != cudaSuccess){
+		fprintf(stdout,"[%s]:[%d] cuda synchronize err!",__FUNCTION__,__LINE__);
+		return;
+	}
+
+	cudaMemcpy(invA,d_inv,sizeof(float)*bat*tupe,cudaMemcpyDeviceToHost);
+//       	int num=bat*tupe;
+//	float* invA_temp = (float*)malloc(sizeof(float)*tupe*bat);
+//
+//	cudaMemcpy(invA_temp,d_inv,sizeof(float)*bat*tupe,cudaMemcpyDeviceToHost);
+//	for(int i=0;i<num;i++){
+//		invA[i]=invA_temp[i]/tupe;
+//	}
 	cudaFree(d_ifftData);        
 	cudaFree(d_inv);
 #endif	

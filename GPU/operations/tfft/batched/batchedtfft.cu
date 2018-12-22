@@ -1,4 +1,5 @@
 #include "fft.h"
+#include "based.h"
 
 
 void batchedTfft(float *t,int l,int bat,cufftComplex *tf)
@@ -69,12 +70,25 @@ void batchedTifft(float *t,int l,int bat,cufftComplex *tf)
             return; 
         }
     cudaDeviceSynchronize();
+       	int num=bat*l;
+	int threads,blocks;
+        if(num<512){
+          threads=num;
+          blocks=1;
+        }else{
+	  threads=512;
+	  blocks=((num%512 ==0)?num/512:num/512+1);
+	}
+         fftResultProcess<<<blocks,threads>>>(d_t,num,l);
+
+	if(cudaDeviceSynchronize() != cudaSuccess){
+		fprintf(stdout,"[%s]:[%d] cuda synchronize err!",__FUNCTION__,__LINE__);
+		return;
+	}
+
     cudaMemcpy(t,d_t,l*bat*sizeof(float),cudaMemcpyDeviceToHost);
 
     cufftDestroy(plan);
     cudaFree(d_fftData);
     cudaFree(d_t);
-    //transform
-    for (int i=0; i<l*bat; i++)
-        t[i] = t[i]/l;
 }
