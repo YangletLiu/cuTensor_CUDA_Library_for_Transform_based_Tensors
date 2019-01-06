@@ -29,7 +29,7 @@ end
 
 
 % take ifft along with third dimension
-%U = ifft(U,[],3);
-%S = ifft(S,[],3);
-%V = ifft(V,[],3);
+U = ifft(U,[],3);
+S = ifft(S,[],3);
+V = ifft(V,[],3);
 

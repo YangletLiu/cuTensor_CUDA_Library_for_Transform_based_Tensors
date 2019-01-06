@@ -2,4 +2,4 @@
 #
 # -singleCompThread  
 #
-matlab -nojvm -nodesktop -nodisplay -r testls
+matlab -nojvm -nodesktop -nodisplay -r test_compress

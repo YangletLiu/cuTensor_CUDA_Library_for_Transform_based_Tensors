@@ -11,7 +11,7 @@ void qrsolve(cuComplex* d_A,cuComplex* d_B,const int m,const int n,const int k,c
 const int M = m;
 const int N = n;
 const int K = k;
-const int min = Min(m,n);
+const int min_m_n = Min(m,n);
 
 //define handles
 cusolverDnHandle_t cusolverH = NULL;
@@ -28,7 +28,7 @@ if( cublasCreate( &cublasH ) != CUBLAS_STATUS_SUCCESS ){
 }
 cuComplex  *d_work, *d_work2, *d_tau;
 int *d_devInfo, devInfo;
-cudaMalloc( (void**)&d_tau,sizeof(cuComplex)* min);
+cudaMalloc( (void**)&d_tau,sizeof(cuComplex)* min_m_n);
 cudaMalloc( (void**)&d_devInfo, sizeof(int));
 int bufsize,bufsize2;
 
@@ -73,7 +73,7 @@ if( cusolverDnCunmqr_bufferSize(
 		CUBLAS_OP_C,
 		M,
 		K,
-		min,
+		min_m_n,
 		d_A,
 		M,
 		d_tau,
@@ -96,7 +96,7 @@ if( cusolverDnCunmqr(
 		CUBLAS_OP_C,
 		M,
 		K,
-		min,
+		min_m_n,
 		d_A,
 		M,
 		d_tau,
@@ -119,10 +119,10 @@ if(d_tau) cudaFree(d_tau);
 if(d_devInfo) cudaFree(d_devInfo);
 
 cuComplex *d_R;
-cudaMalloc((void**)&d_R, sizeof(cuComplex)* min * N);
+cudaMalloc((void**)&d_R, sizeof(cuComplex)* min_m_n * N);
 int threads=0;
 int blocks=0;
-int num = min*N;
+int num = min_m_n*N;
 if(num<512){
 	threads=num;
 	blocks=1;
@@ -130,10 +130,10 @@ if(num<512){
 	threads=512;
 	blocks = ((num%512) == 0)?num/512:num/512+1;
 }
-CopyUpperSubmatrix<<<blocks,threads>>>(d_A, d_R, M, N, min);
+CopyUpperSubmatrix<<<blocks,threads>>>(d_A, d_R, M, N, min_m_n);
 
 cudaDeviceSynchronize();
-num = min*K;
+num = min_m_n*K;
 if(num<512){
 	threads=num;
 	blocks=1;
@@ -141,7 +141,7 @@ if(num<512){
 	threads=512;
 	blocks = ((num%512) == 0)?num/512:num/512+1;
 }
-CopyUpperSubmatrix<<<blocks,threads>>>(d_B, d_X, M, K, min);
+CopyUpperSubmatrix<<<blocks,threads>>>(d_B, d_X, M, K, min_m_n);
 cudaDeviceSynchronize();
 
 //solve x = R \ (Q`*B)
@@ -155,7 +155,7 @@ if( cublasCtrsm(
 		CUBLAS_FILL_MODE_UPPER,
 		CUBLAS_OP_N,
 		CUBLAS_DIAG_NON_UNIT,
-		min,
+		min_m_n,
 		K,
 		&alphat,
 		d_R,

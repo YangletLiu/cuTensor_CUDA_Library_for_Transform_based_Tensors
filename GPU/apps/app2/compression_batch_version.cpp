@@ -1,3 +1,4 @@
+#if 1
 #include <stdlib.h>
 #include <fstream>
 #include <time.h>
@@ -9,15 +10,15 @@
 using namespace std;
 
 int main(int argc, char* argv[]){
-    int m=2;
-    int n=2;
-    int k=2;
+    int m=4;
+    int n=4;
+    int k=4;
     //the data of sumilation
 #if 1    
     float* t = new float[m*n*k];
     for(int i=0;i<m*n*k;i++){
-       // t[i]=(float)rand()/(RAND_MAX/256);
-        t[i]=2;
+  //      t[i]=(float)rand()/(RAND_MAX/256);
+        t[i]=i;
     }
     cout<<"========================="<<endl;
     for(int i=0;i<m*n*k;i++){
@@ -40,15 +41,15 @@ int main(int argc, char* argv[]){
 
     batchedtsvd(t,m,n,k,u,s);
 
-    cout<<endl<<"========================="<<endl;
+    cout<<endl<<"U========================="<<endl;
     for(int i=0;i<u_len;i++){
 	cout<<u[i]<<" ";
     }
-    cout<<endl<<"========================="<<endl;
+    cout<<endl<<"V========================="<<endl;
     for(int i=0;i<v_len;i++){
 	cout<<v[i]<<" ";
     }
-    cout<<endl<<"========================="<<endl;
+    cout<<endl<<"S========================="<<endl;
     for(int i=0;i<s_len;i++){
 	cout<<s[i]<<" ";
     }
@@ -134,7 +135,7 @@ cout<<endl<<"======================="<<endl;
     batcheddiagmat(d_s,row,k,d_s_diagonal);
 
     cudaMemcpy(s_diagonal,d_s_diagonal,sizeof(float)*row*row*k,cudaMemcpyDeviceToHost);
-cout<<endl<<"======================="<<endl;
+cout<<endl<<"s_diagonal======================="<<endl;
     for(int i=0;i<row*row*k;i++){
 	cout<<(float)s_diagonal[i]<<" ";
     } 
@@ -159,8 +160,9 @@ cout<<endl<<">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"<<endl;
 //    batchedtprod(u_s,v,u_s_vt,CUBLAS_OP_N,CUBLAS_OP_C,m,n,row,k);
     batchedtprod(u_s,v,u_s_vt,CUBLAS_OP_N,CUBLAS_OP_N,m,n,row,k);
     cout<<endl;
+cout<<endl<<"test result+++++++++++++++++++++++++++++++++"<<endl;
     for(int i=0;i<m*n*k;i++){
-    cout<<u_s_vt[i]<<' ';
+    cout<<u_s_vt[i]-t[i]<<' ';
     }
     cout<<endl;
     end = clock();
@@ -169,3 +171,4 @@ cout<<endl<<">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"<<endl;
     delete[] u_s_vt;
     return 1;
 }
+#endif

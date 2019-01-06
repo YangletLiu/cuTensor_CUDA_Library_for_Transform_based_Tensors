@@ -2,7 +2,7 @@
  * @device matview_transopse
  * Create on:Nov 28 2018
  * @author: haili
- * the size of tensor is m×n×k×l
+ * the size of tensor is m×n×batch
  */
 #include "based.h"
 __global__ void d_batch_c_transpose(cuComplex* A,const int m,const int n,const int batch,cuComplex* T){

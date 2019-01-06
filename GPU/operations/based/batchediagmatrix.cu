@@ -1,6 +1,6 @@
 #include "based.h"
 /**
-* note the array of result need to set 0;
+* note the result of array need to set 0 before use it;
 */
 __global__ void d_batch_diag_mat(float* t,const int m,const int batch ,float* result){
     int tid=blockDim.x*blockIdx.x+threadIdx.x;

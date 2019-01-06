@@ -56,16 +56,18 @@ printf("\n++++++++++++++++++++\n");
         }else{
             if(strcmp("batched",argv[4]) == 0){ 
             //  batchedsvd(t,m,n,tupe,u,s,v);
-	float* host_u, *host_s;
-	cudaHostAlloc((void**)&host_u,sizeof(float)*m*n*tupe,cudaHostAllocDefault);
+	cuComplex* host_u;
+	float *host_s;
+	cudaHostAlloc((void**)&host_u,sizeof(cuComplex)*m*n*tupe,cudaHostAllocDefault);
 	cudaHostAlloc((void**)&host_s,sizeof(float)*s_len,cudaHostAllocDefault);
             start = clock();    
                 batchedtsvd(t,m,n,tupe,host_u,host_s);
             end = clock();
+	cudaDeviceSynchronize();
             printf("\n++++++++++++++++++++\n");
 	printf("***************U\n");
         for(int i=0;i<m*n*tupe;i++){
-            printf(" %f 	",host_u[i]);
+            printf(" %f %f 	",host_u[i].x,host_u[i].y);
         }
             printf("\n++++++++++++++++++++\n");
 	printf("***************S\n");

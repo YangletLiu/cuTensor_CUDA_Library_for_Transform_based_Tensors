@@ -9,6 +9,6 @@
 #include "batch_svd.h"
 void basedtsvd(float* t,const int m,const int n,const int tupe,float* U,float* S,float* V);
 void streamedtsvd(float* t,const int m,const int n,const int tupe,float* U,float* S,float* V);
-void batchedtsvd(float* t,const int m,const int n, const int tupe, float* host_u,float* S);
+void batchedtsvd(float* t,const int m,const int n, const int tupe, cuComplex* host_u,float* S);
 #endif
 
