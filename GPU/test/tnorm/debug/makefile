@@ -1,5 +1,5 @@
 #=====================================================
-#  CUDA NAKEFILE
+#  CUDA MAKEFILE
 #  @AUTHOR: HAILI
 #  @DATE: 8.26 2018
 #     makefile and src in different dir 
@@ -22,7 +22,7 @@ ALL:$(target)
 %.o:$(src_path)/%.cpp
 	$(CUNV) $< $(INCLUDE) $(LIB)  $(FLAGS) -c $@
 $(target):$(obj)
-	$(CUNV)  $(LIB) $(FLAGS) $(LINK) -o $@ $(obj)
+	$(CUNV) $(INCLUDE) $(LIB) $(FLAGS) $(LINK) -o $@ $(obj)
 	@echo 'make file success!'
 .PHONY:clean
 clean:

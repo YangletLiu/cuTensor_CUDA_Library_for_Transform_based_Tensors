@@ -3,5 +3,7 @@
 #include "cuda_runtime.h"
 #include "cublas_v2.h"
 #include "stdio.h"
-void batchedtnorm(float* t,const int m,const int n,const int tube,float* result);
+void basedtnorm(float* t ,const int m,const int n,float* v, float* a);
+void streamedtnorm(float* t ,const int m,const int n,float* v, float* a);
+void batchedtnorm(float* t,const int m,const int n,float* v,float* a);
 #endif

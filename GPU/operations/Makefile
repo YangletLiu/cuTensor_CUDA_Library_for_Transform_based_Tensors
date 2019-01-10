@@ -28,6 +28,8 @@ src := $(wildcard $(src_dir)/tfft/based/*.cu) \
 	$(wildcard $(src_dir)/tinv/batched/*cu) \
 	$(wildcard $(src_dir)/tinv/based/*cu) \
 	$(wildcard $(src_dir)/tinv/streamed/*cu) \
+	$(wildcard $(src_dir)/tnorm/based/*cu) \
+	$(wildcard $(src_dir)/tnorm/streamed/*cu) \
 	$(wildcard $(src_dir)/tnorm/batched/*cu) \
 	$(wildcard $(src_dir)/based/*.cu)
  
@@ -82,6 +84,10 @@ $(bin_dir)/%.o:$(src_dir)/tsvd/batched/%.cu
 $(bin_dir)/%.o:$(src_dir)/tsvd/based/%.cu
 	$(CUNV) $(INCLUDE) $(LIB) $(CODE_FLAGS) $(FLAGS) -c -o $(bin_dir)/$@  $<
 $(bin_dir)/%.o:$(src_dir)/tsvd/streamed/%.cu
+	$(CUNV) $(INCLUDE) $(CODE_FLAGS) -c -o $(bin_dir)/$@  $<
+$(bin_dir)/%.o:$(src_dir)/tnorm/based/%.cu
+	$(CUNV) $(INCLUDE) $(CODE_FLAGS) -c -o $(bin_dir)/$@  $<
+$(bin_dir)/%.o:$(src_dir)/tnorm/streamed/%.cu
 	$(CUNV) $(INCLUDE) $(CODE_FLAGS) -c -o $(bin_dir)/$@  $<
 $(bin_dir)/%.o:$(src_dir)/tnorm/batched/%.cu
 	$(CUNV) $(INCLUDE) $(CODE_FLAGS) -c -o $(bin_dir)/$@  $<

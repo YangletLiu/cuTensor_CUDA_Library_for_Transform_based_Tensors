@@ -3,8 +3,8 @@
 We implement the cuTensor library for the transform-based tensor model.  
 >    | CuOperations | tfft | tproduct | tsvd | tqr | tinv | tnorm |
 >    | :---: | :---:| :---:| :---: | :---: | :---: | :---: |
->    | based | √ | √ | √ | √ | √ |  |
->    | streamed | √ | √ | √ | √ | √ |  |
+>    | based | √ | √ | √ | √ | √ | √ |
+>    | streamed | √ | √ | √ | √ |  √ | √ |
 >    | batched | √ | √ | √ | √ | √ | √ |
 
 [1] X.-Y. Liu and X. Wang. Fourth-order tensor space with two-dimensional discrete transforms. arXiv,2017.  

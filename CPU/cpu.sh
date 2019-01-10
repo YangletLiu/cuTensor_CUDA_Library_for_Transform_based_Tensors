@@ -2,4 +2,4 @@
 #
 # -singleCompThread  
 #
-matlab -nojvm -nodesktop -nodisplay -r test_compress
+matlab -nojvm -nodesktop -nodisplay -r testnorm

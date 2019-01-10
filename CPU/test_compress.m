@@ -9,7 +9,7 @@ for i=100:100:2000
 %    [result] = compress(T);
     t2 = clock;
     time = etime(t2,t1);
-    fprintf(ft,'%d %d %d %f\n',i,i,k,time);
+    fprintf(ft,'%d %d %d %f \n',i,i,k,time);
 end
 end
 

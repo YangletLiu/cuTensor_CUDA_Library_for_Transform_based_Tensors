@@ -12,7 +12,7 @@ int main(int argc, char **argv){
         int b = atoi(argv[2]);
         int c = atoi(argv[3]);
         int rank = 5;
-#if 0
+#if 1
         float *t1 = new float[a*rank*c];
         for(int i=0; i<a*rank*c; i++)
         	t1[i] = random(1000);
@@ -20,13 +20,16 @@ int main(int argc, char **argv){
         for(int i=0; i<rank*b*c; i++)
         	t2[i] = random(1000);
         float *T = new float[a*b*c];
+ 
+        double mainloopS = cpuSecond();
+ 
         batchedtprod(t1, t2, T, CUBLAS_OP_N, CUBLAS_OP_N, a, b, rank, c);
         delete[] t1;
         t1 = nullptr;
         delete[] t2;
         t2 = nullptr;
 #endif
-#if 1
+#if 0
         float *T = new float[a*b*c];
         float *T_w = new float[a*b*c];
         ifstream read(argv[4]);
@@ -94,7 +97,7 @@ int main(int argc, char **argv){
         omega_f = nullptr;
         cufftComplex *X_f= new cufftComplex[a*rank*c];
         cufftComplex *X_f_trans = new cufftComplex[a*rank*c];
-        double mainloopS = cpuSecond();
+ //       double mainloopS = cpuSecond();
         for (int iter = 0; iter < 15; iter++)
         {
 //            cout << "iter = " << iter <<endl;

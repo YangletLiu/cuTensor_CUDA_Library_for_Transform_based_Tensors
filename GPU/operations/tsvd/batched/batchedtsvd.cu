@@ -252,7 +252,8 @@ void batchedtsvd(float* t,const int m,const int n, const int tupe, cuComplex* ho
 
 
 	//itfft_s
-
+	in[0] = ht;
+	on[0] = tupe;
 	bat = ((m<n)?m:n);
 	stride = bat;
 
