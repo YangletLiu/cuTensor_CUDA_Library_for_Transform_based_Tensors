@@ -37,4 +37,5 @@ We implement the cuTensor library for the transform-based tensor model.
 > **Tel:** \+86 21 6613 5300  
 > **E-Mail:** taozhang@shu.edu.cn  
 > **IIPLab:**[http;//www.findai.net](http://www.findai.net)  
+> **TensorLet Group: [http://www.tensorlet.com] 
 > **github:**[https://github.com/hust512/cuTensor_CUDA_Library_for_Tensors](https://github.com/hust512/cuTensor_CUDA_Library_for_Tensors)  
