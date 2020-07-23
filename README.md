@@ -36,12 +36,12 @@ We implement the cuTensor library for the transform-based tensor model.
 
 ## CONTACT US
 
-> **Tensor and Deep Learning Lab LLC. 
+> Tensor and Deep Learning Lab LLC. 
 
-> **E-Mail:** tensorlet@gmail.com  
+> E-Mail:** tensorlet@gmail.com  
 
-> **TensorLet Group: [http://www.tensorlet.com/projects/cutensor/] 
+> TensorLet Group: [http://www.tensorlet.com/projects/cutensor/] 
 
-> **github:**[https://github.com/hust512/cuTensor_CUDA_Library_for_Tensors](https://github.com/hust512/cuTensor_CUDA_Library_for_Tensors)  
+> github:**[https://github.com/hust512/cuTensor_CUDA_Library_for_Tensors](https://github.com/hust512/cuTensor_CUDA_Library_for_Tensors)  
 
-> **Notice: both US and China patents are filed for this project.
+> Notice: both US and China patents are filed for this project.
