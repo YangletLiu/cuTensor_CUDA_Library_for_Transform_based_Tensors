@@ -7,7 +7,8 @@ We implement the cuTensor library for the transform-based tensor model.
 >    | streamed | √ | √ | √ | √ |  √ | √ |
 >    | batched | √ | √ | √ | √ | √ | √ |
 
-[1] X.-Y. Liu and X. Wang. Fourth-order tensor space with two-dimensional discrete transforms. arXiv,2017.  
+[1] T. Zhang, X.-Y. Liu, X. Wang, and A. Walid. cutensor-tubal: Efficient primitives for tubal-rank tensor operations on GPUs. IEEE Transactions on Parallel and Distributed Systems, 2019.
+[2] T. Zhang, X.-Y. Liu, and X. Wang. High Performance GPU tensor completion with tubal-sampling pattern. IEEE Transactions on Parallel and Distributed Systems, 2020.
 
 
 ## INSTALLION
