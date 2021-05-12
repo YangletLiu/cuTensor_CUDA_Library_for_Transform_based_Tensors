@@ -11,6 +11,8 @@ We implement the cuTensor library for the transform-based tensor model.
 
 [2] T. Zhang, X.-Y. Liu, and X. Wang. High Performance GPU tensor completion with tubal-sampling pattern. IEEE Transactions on Parallel and Distributed Systems, 2020.
 
+[3] X.-Y. Liu, S. Aeron, V. Aggarwal*, X. Wang. Low-tubal-rank tensor completion using alternating minimization. IEEE Transactions on Information Theory, 2019.
+
 
 ## INSTALLION
 
